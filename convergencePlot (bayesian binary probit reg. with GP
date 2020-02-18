@@ -1,6 +1,7 @@
 # Feb 18 2020
 # to reproduce Figure 2 in article N Choudhuri, S Ghosal, A Roy - Statistical Methodology, 2007
 # https://www4.stat.ncsu.edu/~sghosal/papers/binary_method.pdf
+# thanks to Rstudio Cloud for providing computing enviroment
 
 
 load("diffSampleSize0216.RData")
