@@ -1,0 +1,36 @@
+# Feb 18 2020
+# to reproduce Figure 2 in article N Choudhuri, S Ghosal, A Roy - Statistical Methodology, 2007
+# https://www4.stat.ncsu.edu/~sghosal/papers/binary_method.pdf
+
+
+load("diffSampleSize0216.RData")
+load("sampleSize1200.RData")
+
+post.fs.sz1200= post.fs.1200[-c(1:5000),]
+
+calcProb= function(x) { exp(x)/(1+ exp(x))}
+
+x.star= seq(0, 1, length.out = 101)
+
+true.prob= calcProb(x= -2+ 6* x.star)
+
+plot(x= x.star, y= true.prob, type= 'l', ylim= c(0, 1), 
+     col= "blue", lwd= 2, 
+     ylab= "probability estimates", xlab= "covariate")
+lines(x= x.star, y= colMeans(pnorm(post.fs.sz100)), col= "pink", lwd= 1)
+lines(x= x.star, y= colMeans(pnorm(post.fs.sz200)), lty= 1, col= "red", lwd= 1)
+lines(x= x.star, y= colMeans(pnorm(post.fs.sz1000)), lty= 1, col= "grey", lwd= 1)
+lines(x= x.star, y= colMeans(pnorm(post.fs.sz1200)), lty= 1, col= "green", lwd= 2)
+legend("bottomright", 
+       legend= c("true func.", "n=100", "n=200", "n=1000", "n=1200"), 
+       lty= c(1,1,1,1,1), lwd= c(2,1,1,1,2), 
+       col= c("blue", "pink", "red", "grey", "green"),
+       bty= "n")
+
+mean(abs(colMeans(pnorm(post.fs.sz100))- true.prob)) # 0.06223457
+mean(abs(colMeans(pnorm(post.fs.sz200))- true.prob)) # 0.03667649
+mean(abs(colMeans(pnorm(post.fs.sz1000))- true.prob)) # 0.0147174
+mean(abs(colMeans(pnorm(post.fs.sz1200))- true.prob)) # 0.01323029
+
+
+     
